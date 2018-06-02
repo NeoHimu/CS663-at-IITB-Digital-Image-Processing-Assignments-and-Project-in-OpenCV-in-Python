@@ -1,0 +1,37 @@
+function Q3_backup
+I = load('../data/image_low_frequency_noise.mat');
+im=I.Z;
+imF=fft2(im);
+
+
+
+
+figure; imshow(im,[]);
+figure; imshow(imF,[]);
+
+[Max,I] = max(real(imF(:)));
+Max
+[rmax,cmax]=ind2sub(size(imF),I)
+imF(rmax,cmax)=-Inf;
+[M,I] = max(real(imF(:)));
+M
+[r,c]=ind2sub(size(imF),I)
+imF(119+129-1,124+129-1)=0;
+[M,I] = max(real(imF(:)));
+M
+[r,c]=ind2sub(size(imF),I)
+imF(139-129+1,134-129+1)=0;
+imF(rmax,cmax)=Max;
+figure;imshow(imF,[]);
+
+RI=ifft2(imF);
+figure;imshow(RI,[]);
+
+
+
+RI=fft2(imF);
+imF=fftshift(imF);
+imF=abs(imF);
+imF = log(imF + 1);
+figure; imshow(imF,[]);
+end
